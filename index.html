@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Solitaire - Post updates on Twitter via API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Solitaire</h1>
+            <p>Post updates on Twitter via API</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="post-tweet" class="form-horizontal" action="tweet.php" method="post">
+                    <div class="form-group">
+                        <div class="controls col-sm-12">
+                            <div class="feedback"></div>
+                            <textarea class="form-control tweet" name="tweet" id="tweet" rows="6"></textarea>
+                            <button type="submit" class="btn btn-default btn-lg btn-send">Tweet</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal">
+        <img src="css/svg/loading-spin.svg" alt="Loading">
+    </div>
+
+    <script data-main="js/main" src="js/require.js"></script>
+</body>
+</html>

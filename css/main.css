@@ -1,0 +1,55 @@
+.bg-success,
+.bg-danger {
+    border-radius: 5px;
+    padding: 15px
+}
+
+textarea {
+    margin-bottom: 15px
+}
+
+.chars-length {
+    background-color: whitesmoke;
+    display: inline-block;
+    float: left;
+    padding: 13px 30px;
+    text-align: center;
+    width: 90px
+}
+
+.warn {
+    background-color: firebrick;
+    color: #fff;
+}
+
+.btn-send {
+    float: right;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba( 255, 255, 255, .8 );
+}
+
+.modal img {
+    height: 32px;
+    left: 50%;
+    margin: -16px 0 0 -16px;
+    position: absolute;
+    top: 50%;
+    width: 32px
+}
+
+body.loading {
+    overflow: hidden;
+}
+
+body.loading .modal {
+    display: block;
+}
