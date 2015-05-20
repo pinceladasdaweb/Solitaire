@@ -40,8 +40,13 @@
             xhttp.onreadystatechange = function () {
                 if (this.readyState === 4) {
                     if (this.status >= 200 && this.status < 400) {
-                        var json = JSON.parse(this.responseText);
-                        callback.call(self, json);
+                        var response = '';
+                        try {
+                            response = JSON.parse(this.responseText);
+                        } catch (err) {
+                            response = this.responseText;
+                        }
+                        callback.call(self, response);
                     } else {
                         throw new Error(this.status + " - " + this.statusText);
                     }
@@ -65,12 +70,15 @@
 
             return encodedString;
         },
-        createEls: function (name, props) {
+        createEls: function (name, props, text) {
             var el = document.createElement(name), p;
             for (p in props) {
                 if (props.hasOwnProperty(p)) {
                     el[p] = props[p];
                 }
+            }
+            if (text) {
+                el.appendChild(document.createTextNode(text));
             }
             return el;
         },
@@ -83,21 +91,20 @@
         },
         feedback: function (res) {
             var status  = res.status,
-                message = document.createTextNode(res.message),
+                message = res.message,
                 p;
 
             this.form.dataset.status = 'ready';
 
             if (status === 'success') {
-                p = this.createEls('p', {className: 'bg-success text-success'});
+                p = this.createEls('p', {className: 'bg-success text-success'}, message);
 
                 this.status.value = '';
                 document.querySelector('.chars-length').innerHTML = 140;
             } else {
-                p = this.createEls('p', {className: 'bg-danger text-danger'});
+                p = this.createEls('p', {className: 'bg-danger text-danger'}, message);
             }
 
-            p.appendChild(message);
             this.state.appendChild(p);
 
             this.body.classList.remove('loading');
