@@ -64,7 +64,7 @@
                     if (encodedString.length > 0) {
                         encodedString += '&';
                     }
-                    encodedString += encodeURI(prop + '=' + obj[prop]);
+                    encodedString += encodeURIComponent(prop + '=' + obj[prop]);
                 }
             }
 
@@ -91,7 +91,7 @@
         },
         feedback: function (res) {
             var status  = res.status,
-                message = res.message,
+                message = res.message || 'Too bad, an error ocurred. Try again later',
                 p;
 
             this.form.dataset.status = 'ready';
