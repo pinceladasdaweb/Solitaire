@@ -1,6 +1,7 @@
 /*jslint browser: true*/
 /*global define, module, exports*/
 (function (root, factory) {
+    "use strict";
     if (typeof define === 'function' && define.amd) {
         define([], factory);
     } else if (typeof exports === 'object') {
@@ -24,10 +25,6 @@
         this.defaults = {};
 
         this.tweet();
-    };
-
-    Solitaire.init = function () {
-        return new Solitaire();
     };
 
     Solitaire.prototype = {
@@ -55,20 +52,12 @@
             xhttp.send(data);
             xhttp = null;
         },
-        param: function (obj) {
-            var encodedString = '',
-                prop;
+        param: function (data) {
+            var params = typeof data === 'string' ? data : Object.keys(data).map(
+                function (k) { return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]); }
+            ).join('&');
 
-            for (prop in obj) {
-                if (obj.hasOwnProperty(prop)) {
-                    if (encodedString.length > 0) {
-                        encodedString += '&';
-                    }
-                    encodedString += encodeURIComponent(prop + '=' + obj[prop]);
-                }
-            }
-
-            return encodedString;
+            return params;
         },
         createEls: function (name, props, text) {
             var el = document.createElement(name), p;
