@@ -1,5 +1,5 @@
 require(["vcountdown", "solitaire"], function (VCountdown, Solitaire) {
-    VCountdown.init({
+    VCountdown({
         target: '.tweet'
     });
 
