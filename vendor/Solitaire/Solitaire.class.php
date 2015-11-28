@@ -1,9 +1,7 @@
 <?php
 namespace Solitaire;
 
-use Codebird\Codebird;
-
-class Solitaire
+class Solitaire extends \Codebird\Codebird
 {
     private $_tweet;
     private $_consumer_key        = CONSUMER_KEY;
@@ -25,7 +23,7 @@ class Solitaire
             $message = 'Amazing, your tweet has been successfully posted on your timeline.';
         } else {
             $status = 'error';
-            $message = 'Too bad, an error ocurred. Try again later';
+            $message = $reply->errors[0]->message;
         }
 
         $data = array(
@@ -38,9 +36,9 @@ class Solitaire
 
     public function post()
     {
-        Codebird::setConsumerKey($this->_consumer_key, $this->_consumer_secret);
+        parent::setConsumerKey($this->_consumer_key, $this->_consumer_secret);
 
-        $cb = Codebird::getInstance();
+        $cb = parent::getInstance();
         $cb->setToken($this->_access_token, $this->_access_token_secret);
 
         $params = [
