@@ -1,6 +1,10 @@
 # Solitaire
 > Post updates on Twitter via API
 
+## What is it?
+
+Would you like a private interface to post your updates to Twitter? He found the right solution. To learn how to use, just follow the steps below.
+
 ## Getting Started
 
 ```bash
