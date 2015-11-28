@@ -29,21 +29,20 @@
 
     Solitaire.prototype = {
         post: function (path, data, callback) {
-            var xhttp = new XMLHttpRequest(),
-                self  = this;
+            var xhttp = new XMLHttpRequest();
 
             xhttp.open('POST', path, true);
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
             xhttp.onreadystatechange = function () {
                 if (this.readyState === 4) {
-                    if (this.status >= 200 && this.status < 400) {
+                    if (this.status >= 200 && this.status < 300) {
                         var response = '';
                         try {
                             response = JSON.parse(this.responseText);
                         } catch (err) {
                             response = this.responseText;
                         }
-                        callback.call(self, response);
+                        callback.call(this, response);
                     } else {
                         throw new Error(this.status + " - " + this.statusText);
                     }
@@ -71,12 +70,10 @@
             }
             return el;
         },
-        hideMessages: function () {
-            this.status.addEventListener('focus', function () {
-                while (this.state.hasChildNodes()) {
-                    this.state.removeChild(this.state.lastChild);
-                }
-            }.bind(this), false);
+        empty: function () {
+            while (this.state.hasChildNodes()) {
+                this.state.removeChild(this.state.lastChild);
+            }
         },
         feedback: function (res) {
             var status  = res.status,
@@ -97,9 +94,12 @@
             this.state.appendChild(p);
 
             this.body.classList.remove('loading');
-            this.hideMessages();
         },
         tweet: function () {
+            this.status.addEventListener('focus', function (e) {
+                this.empty(e)
+            }.bind(this), false);
+
             this.form.addEventListener('submit', function (e) {
                 e.preventDefault();
 
@@ -107,6 +107,7 @@
                     return;
                 }
 
+                this.empty(e);
                 this.form.dataset.status = 'busy';
                 this.body.classList.add('loading');
 
@@ -114,7 +115,7 @@
                     tweet: this.status.value
                 };
 
-                this.post(this.endpoint, this.param(this.defaults), this.feedback);
+                this.post(this.endpoint, this.param(this.defaults), this.feedback.bind(this));
             }.bind(this), false);
         }
     };
